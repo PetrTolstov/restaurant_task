@@ -16,6 +16,16 @@
     overflow-y: scroll;
 }
 
+.modal {
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll;
+}
+
+.modal::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+}
+
 .shadow {
     top: 0;
     left: 0;
