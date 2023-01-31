@@ -1,0 +1,17 @@
+.main{ 
+    padding: 10px;
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.h{
+    all: unset;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 500;
+    color: #190064;
+}

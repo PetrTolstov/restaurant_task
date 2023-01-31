@@ -1,23 +1,16 @@
 import { observer } from "mobx-react-lite";
 import styles from "./Header.module.css";
+import Restaurant from "../../pages/Restaurant/Restaurant";
+import Button, { Size } from "../Buttons/Button/Button";
 
 function Header() {
     return (
-        <nav className={styles.container}>
-            <ul>
-                <li className={styles.logo}>Movies point</li>
-                <li>
-                    <a href="/movies/1" className={styles.link}>
-                        Movies
-                    </a>
-                </li>
-                <li>
-                    <a href="/profile" className={styles.link}>
-                        Profile
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        <header className={styles.header}>
+            <div className={styles.container}>
+                <h1 className={styles.h}>Restaurant Menu</h1>
+                <Button action={() => console.log("login")} size={Size.Medium}>LogIn</Button>
+            </div>
+        </header>
     );
 }
 

@@ -1,0 +1,43 @@
+.dish{
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 10px;
+    min-height: 100px;
+    justify-content: space-between;
+}
+
+
+.textConteiner{
+    display: flex;
+    flex-direction: column;
+}
+
+.containerForButton{
+    display: flex;
+    justify-content: space-between;
+}
+
+.container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.name{
+    font-size: 16px;
+}
+
+.description{
+    font-size: 14px;
+}
+
+.mass{
+    font-size: 12px;
+}
+
+.price{
+    font-size: 14px;
+}
