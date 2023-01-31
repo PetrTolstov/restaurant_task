@@ -1,10 +1,14 @@
 .main{ 
     padding: 10px;
-    width: 100%;
-    max-width: 1000px;
     display: flex;
     flex-direction: column;
-    
+    align-items: center;
+}
+
+.article{
+    padding: 10px;
+    width: 100%;
+    max-width: 1000px;
 }
 
 .h{
@@ -14,4 +18,5 @@
     font-size: 18px;
     font-weight: 500;
     color: #190064;
+    margin-bottom: 10px;
 }

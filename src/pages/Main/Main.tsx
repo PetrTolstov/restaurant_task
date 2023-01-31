@@ -1,7 +1,7 @@
 import styles from "./Main.module.css";
 import { useEffect, useState } from "react";
 import Dish from "../../models/DishModel/DishModel";
-import ListOfDishes from "../ListOfDishes/ListOfDishes";
+import ListOfDishes from "../../components/ListOfDishes/ListOfDishes";
 
 function Main() {
     const [dishList, setDishList] = useState<Dish[] | null>(null);
@@ -24,8 +24,10 @@ function Main() {
 
     return (
         <main className={styles.main}>
-            <h2 className={styles.h}>Breakfast</h2>
-            {dishList ? <ListOfDishes dishes={dishList} /> : <></>}
+            <article className={styles.article}>
+                <h2 className={styles.h}>Breakfast</h2>
+                {dishList ? <ListOfDishes dishes={dishList} /> : <></>}
+            </article>
         </main>
     );
 }
