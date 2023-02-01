@@ -3,13 +3,14 @@ import styles from "./ListOfDishes.module.css";
 import { v4 } from "uuid";
 import Dish from "../../models/DishModel/DishModel";
 import DishItem from '../DishItem/DishItem';
+import { observer } from "mobx-react-lite";
 
 type HorizontalListProps = {
     wrap?: boolean;
     dishes: Dish[];
 };
 
-export default function ListOfDishes({
+function ListOfDishes({
     dishes,
     wrap = false,
 }: HorizontalListProps) {
@@ -32,3 +33,5 @@ export default function ListOfDishes({
         </div>
     );
 }
+
+export default observer(ListOfDishes)
