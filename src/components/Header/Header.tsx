@@ -10,6 +10,8 @@ import BagStore from "../../Stores/BagStore";
 import Bag from "../Bag/Bag";
 import Confetti from "react-confetti";
 import TabButton from "../Buttons/TabButton/TabButton";
+import DishEditOrAdd from "../DishEditOrAdd/DishEditOrAdd";
+import Dish from "../../models/DishModel/DishModel";
 
 function Header() {
     const [showing, setShowing] = useState(false);
@@ -25,11 +27,12 @@ function Header() {
                         <>
                             <TabButton
                                 action={() => {
-                                    setShowingDishAdding(true)
+                                    setShowingDishAdding(true);
                                 }}
                             />
                             <Button
                                 action={() => {
+                                    localStorage.setItem('isLoggedIn', 'false') 
                                     AppStore.setIsLoggedIn(false);
                                     window.location.reload();
                                 }}
@@ -78,7 +81,17 @@ function Header() {
                     }}
                 />
             </Modal>
-            
+
+            <Modal
+                isShowing={showingDishAdding}
+                closeModal={() => setShowingDishAdding(false)}
+            >
+                <DishEditOrAdd
+                    dish={new Dish("", "", 0, "", 0, "dish", "breakfast")}
+                    closeModal={() => setShowingDishAdding(false)}
+                />
+            </Modal>
+
             {animate ? (
                 <Confetti
                     run={animate}

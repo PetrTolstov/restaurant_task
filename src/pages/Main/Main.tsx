@@ -15,7 +15,6 @@ function Main() {
         ).then((response) => response.json())
         .then((data) => {
             MenuStore.setMenuData(data.data);
-            console.log(data)
         })
         
         

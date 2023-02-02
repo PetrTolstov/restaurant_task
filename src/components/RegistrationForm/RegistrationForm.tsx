@@ -27,18 +27,18 @@ function RegistrationForm({ closeModal }: RegistrationFormProps) {
                 Accept: "application/json",
                 "Content-Type": "application/json",
             },
+            credentials: "include"
         })
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
-                    console.log(data);
                     AppStore.setUserData(
                         new User(userData.email, userData.password)
                     );
+                    localStorage.setItem('isLoggedIn', 'true') 
                     AppStore.setIsLoggedIn(true);
                     closeModal();
                 } else {
-                    console.log(data);
                     alert("Some error with entaring");
                 }
             })

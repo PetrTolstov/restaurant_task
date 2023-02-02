@@ -26,8 +26,6 @@ class MenuStore {
         if(list){
             this.menuData.menu = list
         }
-        console.log(this.menuData.menu)
-        console.log(index)
         return index
     }
 

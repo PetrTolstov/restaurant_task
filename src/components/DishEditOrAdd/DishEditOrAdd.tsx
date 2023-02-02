@@ -34,6 +34,34 @@ function DishEditOrAdd({ dish, closeModal }: BagProps) {
         }
     }
 
+    function Delete() {
+        fetch(
+            `https://restaurant-task-server.onrender.com/protected/dishes/deleteDish`,
+            {
+                method: "POST",
+                body: JSON.stringify({ _id: dish._id }),
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            }
+        )
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    MenuStore.deleteMenuItem(dish._id);
+                    closeModal();
+                    closeModal();
+                } else {
+                    alert("Some error with meal");
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
     function Submit() {
         let meal = {
             name: name,
@@ -43,19 +71,19 @@ function DishEditOrAdd({ dish, closeModal }: BagProps) {
             type: type,
             mealTimeType: mealTimeType,
         };
-        let req = {}
-        let reqPath = ''
-        if(dish._id){
+        let req = {};
+        let reqPath = "";
+        if (dish._id) {
             req = {
-                updatedDish : meal,
-                _id: dish._id
-            }
-            reqPath = "updateDish"
-        }else{
+                updatedDish: meal,
+                _id: dish._id,
+            };
+            reqPath = "updateDish";
+        } else {
             req = {
-                newDish : meal
-            }
-            reqPath = "createDish"
+                newDish: meal,
+            };
+            reqPath = "createDish";
         }
 
         fetch(
@@ -67,21 +95,40 @@ function DishEditOrAdd({ dish, closeModal }: BagProps) {
                     Accept: "application/json",
                     "Content-Type": "application/json",
                 },
-                credentials: "include"
+                credentials: "include",
             }
         )
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
-                    if(dish._id){
-                        MenuStore.changeMenuData(new Dish(dish._id, meal.name, meal.price, meal.description, meal.mass, meal.type, meal.mealTimeType));
-                    }else{
-                        MenuStore.pushDishInMenu(new Dish(data.data._id, meal.name, meal.price, meal.description, meal.mass, meal.type, meal.mealTimeType));
+                    if (dish._id) {
+                        MenuStore.changeMenuData(
+                            new Dish(
+                                dish._id,
+                                meal.name,
+                                meal.price,
+                                meal.description,
+                                meal.mass,
+                                meal.type,
+                                meal.mealTimeType
+                            )
+                        );
+                    } else {
+                        MenuStore.pushDishInMenu(
+                            new Dish(
+                                data.data._id,
+                                meal.name,
+                                meal.price,
+                                meal.description,
+                                meal.mass,
+                                meal.type,
+                                meal.mealTimeType
+                            )
+                        );
                     }
 
                     closeModal();
                 } else {
-                    console.log(data);
                     alert("Some error with meal");
                 }
             })
@@ -105,7 +152,7 @@ function DishEditOrAdd({ dish, closeModal }: BagProps) {
             <TextInput
                 value={`${price}`}
                 placeholder={"Price"}
-                onChange={(newValue) => setPrice(parseInt(newValue))}
+                onChange={(newValue) => setPrice(parseFloat(newValue))}
             />
 
             <label>Mass</label>
@@ -114,7 +161,7 @@ function DishEditOrAdd({ dish, closeModal }: BagProps) {
                     defaultValue={mass.toString()}
                     placeholder={"Mass"}
                     onChange={(newValue) =>
-                        setMass(parseInt(newValue.currentTarget.value))
+                        setMass(parseFloat(newValue.currentTarget.value))
                     }
                 />
 
@@ -136,35 +183,34 @@ function DishEditOrAdd({ dish, closeModal }: BagProps) {
                 </select>
             </div>
             <div className={styles.container}>
-            <select
-            className={styles.selectMeal}
-                onChange={(e) => {
-                    if (
-                        e.currentTarget.value === "breakfast" ||
-                        e.currentTarget.value === "lunch" ||
-                        e.currentTarget.value === "dinner" ||
-                        e.currentTarget.value === "drinks" ||
-                        e.currentTarget.value === "other"
-                    ) {
-                        setMealTimeType(e.currentTarget.value);
-                    }
-                }}
-                defaultValue={defaultMealTimeType()}
-            >
-                <>
-                    <option value={"breakfast"}>Breakfast</option>
-                    <option value={"lunch"}>Lunch</option>
-                    <option value={"dinner"}>Dinner</option>
-                    <option value={"drinks"}>Drinks</option>
-                    <option value={"other"}>Other</option>
-                </>
-            </select>
+                <select
+                    className={styles.selectMeal}
+                    onChange={(e) => {
+                        if (
+                            e.currentTarget.value === "breakfast" ||
+                            e.currentTarget.value === "lunch" ||
+                            e.currentTarget.value === "dinner" ||
+                            e.currentTarget.value === "drinks" ||
+                            e.currentTarget.value === "other"
+                        ) {
+                            setMealTimeType(e.currentTarget.value);
+                        }
+                    }}
+                    defaultValue={defaultMealTimeType()}
+                >
+                    <>
+                        <option value={"breakfast"}>Breakfast</option>
+                        <option value={"lunch"}>Lunch</option>
+                        <option value={"dinner"}>Dinner</option>
+                        <option value={"drinks"}>Drinks</option>
+                        <option value={"other"}>Other</option>
+                    </>
+                </select>
             </div>
             <div className={styles.buttons}>
                 <Button
                     action={() => {
-                        MenuStore.deleteMenuItem(dish._id);
-                        closeModal();
+                        Delete();
                     }}
                     size={Size.Medium}
                 >
