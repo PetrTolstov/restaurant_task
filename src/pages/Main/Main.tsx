@@ -8,51 +8,83 @@ import MenuStore from "../../Stores/MenuStore";
 function Main() {
     const [dishList, setDishList] = useState<Dish[] | null>(null);
     useEffect(() => {
-        let list = [];
-        list.push(
-            new Dish(
-                `21211`,
-                `Name `,
-                3,
-                `Description`,
-                3,
-                "dish",
-                "lunch"
-            )
-        );
-        for (let i = 0; i < 30; i++) {
-            list.push(
-                new Dish(
-                    `${i}`,
-                    `Name ${i}`,
-                    i,
-                    `Description ${i}`,
-                    i + i,
-                    "dish",
-                    "breakfast"
-                )
-            );
-        }
-        MenuStore.setMenuData(list)
+       
+
+        fetch(
+            "https://restaurant-task-server.onrender.com/getDishes"
+        ).then((response) => response.json())
+        .then((data) => {
+            MenuStore.setMenuData(data.data);
+            console.log(data)
+        })
         
+        
+       
     }, []);
 
     return (
         <main className={styles.main}>
             <article className={styles.article}>
                 <h2 className={styles.h}>Breakfast</h2>
-                {MenuStore.menuData.menu ? <ListOfDishes dishes={[...MenuStore.menuData.menu].filter((el)=> {
-                    return el.mealTimeType === "breakfast"
-                })} /> : <></>}
+                {MenuStore.menuData.menu ? (
+                    <ListOfDishes
+                        dishes={[...MenuStore.menuData.menu].filter((el) => {
+                            return el.mealTimeType === "breakfast";
+                        })}
+                    />
+                ) : (
+                    <></>
+                )}
             </article>
 
             <article className={styles.article}>
                 <h2 className={styles.h}>Lunch</h2>
-                {MenuStore.menuData.menu ? <ListOfDishes dishes={[...MenuStore.menuData.menu].filter((el)=> {
-                    return el.mealTimeType === "lunch"
-                })} /> : <></>}
+                {MenuStore.menuData.menu ? (
+                    <ListOfDishes
+                        dishes={[...MenuStore.menuData.menu].filter((el) => {
+                            return el.mealTimeType === "lunch";
+                        })}
+                    />
+                ) : (
+                    <></>
+                )}
             </article>
-
+            <article className={styles.article}>
+                <h2 className={styles.h}>Dinner</h2>
+                {MenuStore.menuData.menu ? (
+                    <ListOfDishes
+                        dishes={[...MenuStore.menuData.menu].filter((el) => {
+                            return el.mealTimeType === "dinner";
+                        })}
+                    />
+                ) : (
+                    <></>
+                )}
+            </article>
+            <article className={styles.article}>
+                <h2 className={styles.h}>Drinks</h2>
+                {MenuStore.menuData.menu ? (
+                    <ListOfDishes
+                        dishes={[...MenuStore.menuData.menu].filter((el) => {
+                            return el.mealTimeType === "drinks";
+                        })}
+                    />
+                ) : (
+                    <></>
+                )}
+            </article>
+            <article className={styles.article}>
+                <h2 className={styles.h}>Other</h2>
+                {MenuStore.menuData.menu ? (
+                    <ListOfDishes
+                        dishes={[...MenuStore.menuData.menu].filter((el) => {
+                            return el.mealTimeType === "other";
+                        })}
+                    />
+                ) : (
+                    <></>
+                )}
+            </article>
         </main>
     );
 }

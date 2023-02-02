@@ -8,7 +8,9 @@ import Modal from "../Modal/Modal";
 import TextInput from "../FormElements/TextInput/TextInput";
 import { observer } from "mobx-react-lite";
 import MenuStore from "../../Stores/MenuStore";
-import { Size } from '../Buttons/Button/Button';
+import { Size } from "../Buttons/Button/Button";
+import BagStore from "../../Stores/BagStore";
+import DishEditOrAdd from "../DishEditOrAdd/DishEditOrAdd";
 
 type DishProps = {
     dish: Dish;
@@ -22,11 +24,8 @@ function DishItem({ dish }: DishProps) {
     const [mass, setMass] = useState(dish.mass);
     const [type, setType] = useState(dish.type);
     const [price, setPrice] = useState(dish.price);
-    
-    function Submit(){
-        const meal = new Dish(dish._id, name, price, description, mass, type, dish.mealTimeType)
-        MenuStore.changeMenuData(dish._id, meal)
-    }
+
+
 
     return (
         <div className={styles.dish}>
@@ -36,7 +35,12 @@ function DishItem({ dish }: DishProps) {
                     {AppStore.userData.isLoggedIn ? (
                         <Button action={() => setShowing(true)}>Edit</Button>
                     ) : (
-                        <TabButton action={() => setAmount(amount + 1)} />
+                        <TabButton
+                            action={() => {
+                                setAmount(amount + 1);
+                                BagStore.setBagData(dish._id);
+                            }}
+                        />
                     )}
                 </div>
                 <span className={styles.description}>{dish.description}</span>
@@ -48,63 +52,18 @@ function DishItem({ dish }: DishProps) {
                 <span className={styles.price}>{dish.price}€</span>
             </div>
 
-            {amount > 0 ? (
-                <span className={styles.amount}>{amount}</span>
+            {BagStore.bagData.bag[dish._id] > 0 ? (
+                <span className={styles.amount}>
+                    {BagStore.bagData.bag[dish._id]}
+                </span>
             ) : (
                 <></>
             )}
             <Modal isShowing={showing} closeModal={() => setShowing(false)}>
-                <TextInput
-                    value={name}
-                    placeholder={"Name"}
-                    onChange={(newValue) => setName(newValue)}
+                <DishEditOrAdd
+                    closeModal={() => setShowing(false)}
+                    dish={dish}
                 />
-                <TextInput
-                    value={description}
-                    placeholder={"Description"}
-                    onChange={(newValue) => setDescription(newValue)}
-                />
-                <TextInput
-                    value={`${price}`}
-                    placeholder={"Price"}
-                    onChange={(newValue) => setPrice(parseInt(newValue))}
-                />
-                <div className={styles.container}>
-                    <input
-                       
-                        defaultValue={mass.toString()}
-                        placeholder={"Mass"}
-                        onChange={(newValue) =>
-                            setMass(parseInt(newValue.currentTarget.value))
-                        }
-                    />
-                
-                    <select
-                       
-                        onChange={(e) => {
-                            if (
-                                e.currentTarget.value === "drink" ||
-                                e.currentTarget.value === "dish"
-                            ) {
-                                setType(e.currentTarget.value);
-                            }
-                        }}
-                        defaultValue={type === "drink" ? "drink" : "dish"}
-                    >
-                        
-                            <>
-                                <option value={"drink"}>
-                                    ml
-                                </option>
-                                <option value={"dish"}>g</option>
-                            </>
-                        
-                    </select>
-                </div>
-                <div className={styles.buttons}>
-                    <Button action={() => MenuStore.deleteMenuItem(dish._id)} size={Size.Medium}>Delete</Button>
-                    <Button isSubmit action={() => Submit()} filled size={Size.Medium}>Submit</Button>
-                </div>
             </Modal>
         </div>
     );

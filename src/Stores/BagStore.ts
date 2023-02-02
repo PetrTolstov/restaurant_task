@@ -1,23 +1,38 @@
 import { makeAutoObservable } from "mobx";
-import Dish from "../models/DishModel/DishModel";
-
-
-class BagStore { 
-    constructor() { 
-        makeAutoObservable(this)
+class BagStore {
+    constructor() {
+        makeAutoObservable(this);
     }
 
-    bagData: {bag: {id: string, amount: number}[]} = { 
-        bag: [],
-    }
-    setBagData(id: string, amount: number) { 
-       
+    bagData: { bag: any } = {
+        bag: {},
+    };
 
-        this.bagData.bag.push({id: id, amount: amount }); 
+    clearBag(){
+        this.bagData.bag = {}
     }
+
+    setBagData(id: string) {
+        if (this.bagData.bag[id]) {
+            this.bagData.bag[id]++;
+        } else {
+            this.bagData.bag[id] = 1;
+        }
+    }
+    get getAmountBagData() {
+        const keys = Object.keys(this.bagData.bag);
+
+        let amount = 0;
+
+        for (let key of keys) {
+            if (this.bagData.bag[key]) {
+                amount += this.bagData.bag[key];
+            }
+        }
+
+        return amount;
+    }
+
 }
- 
 
-
-
-export default new BagStore(); 
+export default new BagStore();

@@ -1,0 +1,109 @@
+.dish{
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 10px;
+    min-height: 100px;
+    justify-content: space-between;
+    position: relative;
+}
+
+
+.textConteiner{
+    display: flex;
+    flex-direction: column;
+}
+
+.containerForButton{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.name{
+    font-size: 16px;
+}
+
+.description{
+    font-size: 14px;
+}
+
+.mass{
+    font-size: 12px;
+}
+
+.price{
+    font-size: 14px;
+}
+
+.amount{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 15px;
+    width: 15px;
+    font-size: 10px;
+    border-radius: 20px;
+    color: white;
+    background-color: #fd4f4f;
+}
+
+
+.container { 
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0;
+}
+
+
+.container > label { 
+    align-self: flex-start;
+    margin-bottom: 5px;
+}
+.container > input { 
+    all: unset;
+
+    text-align: left;
+    padding: 10px 15px;
+    font-size: 15px;
+    border-radius: 20px 0 0 20px; 
+    border: 0.1px solid black;
+}
+
+
+.container > select {
+   
+
+    text-align: left;
+    padding: 10px 15px;
+    font-size: 15px;
+    border: 0.1px solid black;
+}
+
+.selectMeal{
+    width: 100%;
+    border-radius: 20px;
+}
+
+.buttons{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.buttons button:first-child{
+    background-color: #fd4f4f;
+    color: white;
+}

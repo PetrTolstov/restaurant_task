@@ -31,9 +31,35 @@ class MenuStore {
         return index
     }
 
-    changeMenuData(id: string, newValue: Dish){
-        let index = this.deleteMenuItem(id)
+    changeMenuData(newValue: Dish){
+        let index = this.deleteMenuItem(newValue._id)
         this.menuData.menu?.splice(index, 0, newValue)
+    }
+
+    pushDishInMenu(newValue: Dish){
+        this.menuData.menu?.push(newValue)
+    }
+
+    getDishNameById(id: string){
+        let name = ''
+        this.menuData.menu?.filter((el, i) => {
+            if(el._id === id){
+                name = el.name
+            }
+            return el._id !== id
+        })
+        return name
+    }
+
+    getDishPriceById(id: string){
+        let price = 0
+        this.menuData.menu?.filter((el, i) => {
+            if(el._id === id){
+                price = el.price
+            }
+            return el._id !== id
+        })
+        return price
     }
 }
 
